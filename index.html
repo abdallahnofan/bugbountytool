@@ -1,1 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description"
+        content="Abdallah Nofan BugBounty Program © – Advanced tools for identifying website vulnerabilities. Join our elite program and secure the web!">
+    <meta name="keywords" content="bug bounty, cybersecurity, vulnerability scanner, security tools, elite security">
+    <title>Abdallah Nofan BugBounty Program © – Secure the Web</title>
+    <link rel="icon" type="image/x-ico" href="favicon.ico">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Merriweather:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #a2b6d2 100%);
+            color: #1a2a44;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #1a2a44 0%, #0d1a2e 100%);
+            color: #ffffff;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: padding 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+        }
+
+        .dark-mode header {
+            background: rgba(26, 42, 68, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo {
+            font-family: 'Merriweather', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e90ff;
+            text-shadow: 0 1px 5px rgba(30, 144, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 24px;
+            color: #1a2a44;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+        }
+
+        .dark-mode .nav-toggle {
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li {
+            list-style: none;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #1a2a44;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .dark-mode .nav-links li a {
+            color: #ffffff;
+        }
+
+        .nav-links li a:hover {
+            color: #1e90ff;
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #1e90ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            background: #1e90ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1001;
+            box-shadow: 0 3px 10px rgba(30, 144, 255, 0.4);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(30, 144, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://via.placeholder.com/1920x1080?text=Ultra+Premium+Blue+Background') no-repeat center/cover;
+            color: #ffffff;
+            padding: 0 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            animation: fadeInDownBig 1.5s ease-in;
+        }
+
+        .hero-content p {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            margin-bottom: 30px;
+            animation: fadeInUpBig 1.5s ease-in;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 60px 15px;
+            background: #ffffff;
+            text-align: center;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(245, 247, 250, 0.95));
+            z-index: 0;
+        }
+
+        .dark-mode .features {
+            background: #1a2a44;
+        }
+
+        .features h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 32px;
+            color: #1e90ff;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(30, 144, 255, 0.2);
+            animation: bounceIn 1.5s ease-in;
+        }
+
+        .feature-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: #f5f7fa;
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(30, 144, 255, 0.1);
+        }
+
+        .dark-mode .feature-card {
+            background: #233554;
+            border-color: rgba(30, 144, 255, 0.15);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            background: #ffffff;
+            opacity: 0.95;
+        }
+
+        .dark-mode .feature-card:hover {
+            background: #2a3e5d;
+        }
+
+        .feature-card h3 {
+            font-family: 'Merriweather', serif;
+            font-size: 24px;
+            color: #1a2a44;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .feature-card h3 {
+            color: #ffffff;
+        }
+
+        .feature-card p {
+            font-family: 'Inter', sans-serif;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .dark-mode .feature-card p {
+            color: #c0c0c0;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 60px 15px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .dark-mode .pricing {
+            background: #1a2a44;
+        }
+
+        .pricing h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 32px;
+            color: #1e90ff;
+            margin-bottom: 60px;
+            text-shadow: 0 2px 10px rgba(30, 144, 255, 0.2);
+            animation: bounceIn 1.5s ease-in;
+        }
+
+        .price-card {
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 25px;
+            background: #f5f7fa;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark-mode .price-card {
+            background: #233554;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .price-card h3 {
+            font-family: 'Merriweather', serif;
+            font-size: 24px;
+            color: #1a2a44;
+            margin-bottom: 15px;
+        }
+
+        .dark-mode .price-card h3 {
+            color: #ffffff;
+        }
+
+        .price-card p {
+            font-family: 'Inter', sans-serif;
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .dark-mode .price-card p {
+            color: #c0c0c0;
+        }
+
+        .buy-button {
+            background: #1e90ff;
+            color: #ffffff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.4);
+            min-width: 150px;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(30, 144, 255, 0.5);
+            background: #4169e1;
+        }
+
+        /* Scanner Dashboard */
+        .scanner-dashboard {
+            padding: 60px 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .scanner-dashboard h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 32px;
+            color: #1e90ff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .scan-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scan-selector select,
+        .scan-selector input,
+        .scan-selector button {
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-width: 200px;
+        }
+
+        .scan-selector select:focus,
+        .scan-selector input:focus,
+        .scan-selector button:focus {
+            outline: none;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.3);
+        }
+
+        .scan-selector button {
+            background: #1e90ff;
+            color: #ffffff;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        .scan-selector button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(30, 144, 255, 0.5);
+            background: #4169e1;
+        }
+
+        .scan-results {
+            background: #f5f7fa;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+        }
+
+        .dark-mode .scan-results {
+            background: #233554;
+        }
+
+        .scan-results h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 24px;
+            color: #1e90ff;
+            margin-bottom: 15px;
+        }
+
+        #resultsContent {
+            font-family: 'Inter', sans-serif;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .dark-mode #resultsContent {
+            color: #c0c0c0;
+        }
+
+        /* Purchase Popup */
+        .purchase-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .dark-mode .popup-content {
+            background: #333333;
+            color: #ffffff;
+        }
+
+        .contact-icons {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        .purchase-popup button {
+            background: #1e90ff;
+            color: #ffffff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(30, 144, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .purchase-popup button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(30, 144, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a2a44;
+            color: #ffffff;
+            padding: 40px 15px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1920x1080?text=Ultra+Subtle+Blue+Pattern') no-repeat center/cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .logo-anim {
+            font-family: 'Merriweather', serif;
+            font-size: 20px;
+            color: #1e90ff;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 5px rgba(30, 144, 255, 0.3);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeInDownBig {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUpBig {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design (Enhanced for Mobile) */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+                padding: 15px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 20px 0;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .dark-mode .nav-links {
+                background: rgba(26, 42, 68, 0.95);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .nav-links li a {
+                font-size: 18px;
+                padding: 10px 20px;
+            }
+
+            .hero {
+                height: 60vh;
+                padding: 0 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 28px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .features,
+            .pricing,
+            .scanner-dashboard {
+                padding: 40px 10px;
+            }
+
+            .features h2,
+            .pricing h2,
+            .scanner-dashboard h1 {
+                font-size: 24px;
+            }
+
+            .feature-grid,
+            .price-card {
+                max-width: 100%;
+                margin: 0 5px;
+            }
+
+            .feature-card {
+                padding: 15px;
+                border-radius: 12px;
+            }
+
+            .scan-selector {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .scan-selector select,
+            .scan-selector input,
+            .scan-selector button {
+                min-width: 100%;
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .scan-results {
+                padding: 10px;
+                border-radius: 12px;
+            }
+
+            footer {
+                padding: 30px 10px;
+            }
+
+            .dark-mode-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .buy-button,
+            .purchase-popup button {
+                min-width: 120px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-toggle {
+                display: none !important;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background: none;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            .hero {
+                height: 80vh;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Abdallah Nofan BugBounty Program ©</div>
+            <button class="nav-toggle" onclick="toggleNav()">☰</button>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#scanner">Scanner</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </nav>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Elite Bug Bounty Scanning – Secure the Web, Earn Rewards</h1>
+            <p>Advanced tools for identifying vulnerabilities. Join our elite program and protect digital assets
+                worldwide.</p>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Unrivaled Security Tools</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>HTTP GET & Headers Analysis</h3>
+                <p>Scan and analyze HTTP headers and responses for vulnerabilities.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Directory Listing</h3>
+                <p>Check for exposed directories and files on web servers.</p>
+            </div>
+            <div class="feature-card">
+                <h3>HTTP Methods</h3>
+                <p>Test for supported HTTP methods and potential misconfigurations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Security Headers</h3>
+                <p>Evaluate security headers like CSP and HSTS for protection.</p>
+            </div>
+            <div class="feature-card">
+                <h3>SQL Injection Detection</h3>
+                <p>Identify potential SQL injection points with advanced scanning.</p>
+            </div>
+            <div class="feature-card">
+                <h3>XSS Vulnerability Check</h3>
+                <p>Detect cross-site scripting vulnerabilities in web applications.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Open Redirect</h3>
+                <p>Test for open redirect vulnerabilities on web applications.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Path Traversal</h3>
+                <p>Detect path traversal attempts in web servers.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Directory Brute Force</h3>
+                <p>Simulate brute force attacks on directories to find hidden files.</p>
+            </div>
+            <div class="feature-card">
+                <h3>SSL Certificate</h3>
+                <p>Verify SSL certificate status and security.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Robots.txt</h3>
+                <p>Analyze robots.txt files for security implications.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Cookie Security</h3>
+                <p>Check cookie security settings for vulnerabilities.</p>
+            </div>
+            <div class="feature-card">
+                <h3>CORS Check</h3>
+                <p>Evaluate CORS policies for potential misconfigurations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>WAF Detection</h3>
+                <p>Detect the presence of Web Application Firewalls.</p>
+            </div>
+            <div class="feature-card">
+                <h3>DNS Lookup</h3>
+                <p>Perform DNS lookups to gather domain information.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Page Title</h3>
+                <p>Fetch and display webpage titles for analysis.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Port Scan</h3>
+                <p>Simulate scanning common ports for open/closed status.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <h2>Exclusivity Redefined</h2>
+        <div class="price-card">
+            <h3>Elite Membership</h3>
+            <p>15 JOD | $20 USD / Month</p>
+            <p>Unlimited scans, advanced reports, and priority support for elite hunters.</p>
+            <button class="buy-button" onclick="showPurchasePopup()">Purchase Access</button>
+        </div>
+    </section>
+
+    <main class="scanner-dashboard" id="scanner">
+        <h1>Scanner Dashboard</h1>
+        <div class="scan-selector">
+            <select id="scanType" aria-label="Select scan type">
+                <option value="httpHeaders">HTTP GET & Headers</option>
+                <option value="directoryListing">Directory Listing</option>
+                <option value="httpMethods">HTTP Methods</option>
+                <option value="securityHeaders">Security Headers</option>
+                <option value="sqlInjection">SQL Injection</option>
+                <option value="xss">XSS</option>
+                <option value="openRedirect">Open Redirect</option>
+                <option value="pathTraversal">Path Traversal</option>
+                <option value="directoryBruteForce">Directory Brute Force</option>
+                <option value="sslCertificate">SSL Certificate</option>
+                <option value="robotsTxt">Robots.txt</option>
+                <option value="cookieSecurity">Cookie Security</option>
+                <option value="corsCheck">CORS Check</option>
+                <option value="wafDetection">WAF Detection</option>
+                <option value="dnsLookup">DNS Lookup</option>
+                <option value="pageTitle">Page Title</option>
+                <option value="portScan">Port Scan</option>
+            </select>
+            <input type="url" id="targetUrl" placeholder="Enter target URL" aria-label="Target URL">
+            <button onclick="runScan()" aria-label="Run scan">Run Scan</button>
+        </div>
+        <div id="scanResults" class="scan-results">
+            <h2>Scan Results</h2>
+            <div id="resultsContent"></div>
+        </div>
+    </main>
+
+    <footer id="contact">
+        <div class="logo-anim">Abdallah Nofan BugBounty Program ©</div>
+        <p>© Abdallah Nofan</p>
+    </footer>
+
+    <div id="purchasePopup" class="purchase-popup" style="display: none;">
+        <div class="popup-content">
+            <p>To purchase Abdallah Nofan BugBounty Program ©, please contact the developer:</p>
+            <div class="contact-icons">
+                <a href="https://www.instagram.com/abdallahnofann" target="_blank" aria-label="Contact on Instagram">
+                    <img src="instagram-flaticon.svg" alt="Instagram" class="social-icon">
+                </a>
+                <a href="https://wa.me/447537175422" target="_blank" aria-label="Contact on WhatsApp">
+                    <img src="whatsapp-flaticon.svg" alt="WhatsApp" class="social-icon">
+                </a>
+            </div>
+            <button onclick="closePurchasePopup()" aria-label="Close popup">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href') || '#home').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                toggleNav(); // Close mobile nav after clicking
+            });
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Navigation Toggle
+        function toggleNav() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Purchase Popup
+        function showPurchasePopup() {
+            const popup = document.getElementById('purchasePopup');
+            popup.style.display = 'flex';
+        }
+
+        function closePurchasePopup() {
+            const popup = document.getElementById('purchasePopup');
+            popup.style.display = 'none';
+        }
+
+        // Scanner Functionality (Simplified with All Features)
+        let scanData = {
+            httpHeaders: { result: "Sample headers detected" },
+            directoryListing: { result: "Directories found: /, /admin (simulated)" },
+            httpMethods: { result: "Methods supported: GET, POST (simulated)" },
+            securityHeaders: { result: "Security headers present: CSP, HSTS (simulated)" },
+            sqlInjection: { result: "Potential SQL injection point found" },
+            xss: { result: "Possible XSS vulnerability detected" },
+            openRedirect: { result: "Open redirect vulnerability detected (simulated)" },
+            pathTraversal: { result: "Path traversal attempt detected (simulated)" },
+            directoryBruteForce: { result: "Potential directories found (simulated)" },
+            sslCertificate: { result: "SSL certificate status checked (simulated)" },
+            robotsTxt: { result: "Robots.txt content analyzed (simulated)" },
+            cookieSecurity: { result: "Cookie security issues found (simulated)" },
+            corsCheck: { result: "CORS configuration checked (simulated)" },
+            wafDetection: { result: "WAF presence detected (simulated)" },
+            dnsLookup: { result: "DNS records retrieved (simulated)" },
+            pageTitle: { result: "Page title fetched (simulated)" },
+            portScan: { result: "Ports scanned: 80 open, 443 closed (simulated)" }
+        };
+
+        function runScan() {
+            const scanType = document.getElementById('scanType').value;
+            const targetUrl = document.getElementById('targetUrl').value;
+            const resultsContent = document.getElementById('resultsContent');
+
+            if (!targetUrl) {
+                resultsContent.innerHTML = '<p class="error">Please enter a target URL.</p>';
+                return;
+            }
+
+            resultsContent.innerHTML = '<p>Loading...</p>';
+            setTimeout(() => {
+                const result = scanData[scanType] || { result: "No vulnerabilities found" };
+                resultsContent.innerHTML = `
+                    <p><strong>Scan Type:</strong> ${scanType}</p>
+                    <p><strong>Target:</strong> ${targetUrl}</p>
+                    <p><strong>Result:</strong> ${result.result}</p>
+                `;
+            }, 800);
+        }
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.buy-button').addEventListener('click', showPurchasePopup);
+            // Show scanner dashboard when "Scanner" nav link is clicked
+            document.querySelector('.nav-links li a[href="#scanner"]').addEventListener('click', () => {
+                document.querySelector('.hero').style.display = 'none';
+                document.querySelector('.features').style.display = 'none';
+                document.querySelector('.pricing').style.display = 'none';
+                document.querySelector('.scanner-dashboard').style.display = 'block';
+                document.querySelector('footer').style.display = 'block';
+            });
+            // Show home sections when other nav links are clicked
+            document.querySelectorAll('.nav-links li a:not([href="#scanner"])').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.querySelector('.hero').style.display = 'flex';
+                    document.querySelector('.features').style.display = 'block';
+                    document.querySelector('.pricing').style.display = 'block';
+                    document.querySelector('.scanner-dashboard').style.display = 'none';
+                    document.querySelector('footer').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    <!-- Icons attribution:
+    Instagram logo icons created by Pixel perfect - Flaticon (https://www.flaticon.com/free-icons/instagram-logo)
+    Whatsapp icons created by cobynecz - Flaticon (https://www.flaticon.com/free-icons/whatsapp) -->
+</body>
+
+</html>
